@@ -19,6 +19,7 @@
 AgreeBP::AgreeBP(const AgreeBPParams *params)
     : BPredUnit(params),
       globalHistorySize(params->globalHistorySize),
+      PatternHistoryTable(params->PHTSize, SatCounter(params->satCounterBits)),
       PHTSize(params->PHTSize),
       satCounterBits(params->satCounterBits),
       BBSSize(params->BBSSize)
@@ -41,7 +42,6 @@ AgreeBP::AgreeBP(const AgreeBPParams *params)
 
     globalHistory.resize(globalHistorySize);
     BiasingBitStorage.resize(BBSSize);
-    PatternHistoryTable.pesize(PHTSize);
 
     /* As most branches are usually taken, initialize them to taken (1)*/
     for (int i = 0; i < globalHistorySize; ++i) {
@@ -51,10 +51,7 @@ AgreeBP::AgreeBP(const AgreeBPParams *params)
         BiasingBitStorage[i] = 1;
     }
 
-    /* Initialize saturating counters to not taken (0)*/
-    for (int i = 0; i < PHTSize; ++i) {
-        PatternHistoryTable[i] = SatCounter(satCounterBits);
-    }
+    DPRINTF(Fetch, "Successfully initialized Agree predictor\n");
 }
 
 bool
