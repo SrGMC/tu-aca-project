@@ -12,9 +12,6 @@
 #include <cmath>
 
 #include "cpu/pred/agree.hh"
-
-#include "base/bitfield.hh"
-#include "base/intmath.hh"
 #include "debug/Branch.hh"
 
 AgreeBP::AgreeBP(const AgreeBPParams *params)
