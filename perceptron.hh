@@ -9,8 +9,6 @@
  * Author: Álvaro Galisteo
  */
 
-/* Definition of Perceptron (Custom Perceptron). */
-
 #ifndef __CPU_PRED_PERCEPTRON_HH__
 #define __CPU_PRED_PERCEPTRON_HH__
 

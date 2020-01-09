@@ -80,8 +80,6 @@ class AgreeBP : public BPredUnit
   private:
 
     struct BPHistory {
-        /* Branch address */
-        Addr branch_addr;
         /* Global History Register */
         unsigned globalHistory;
         /*Prediction of BBS*/

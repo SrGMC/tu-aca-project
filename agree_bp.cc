@@ -11,7 +11,7 @@
 
 #include <cmath>
 
-#include "cpu/pred/agree.hh"
+#include "cpu/pred/agree_bp.hh"
 #include "debug/Branch.hh"
 
 AgreeBP::AgreeBP(const AgreeBPParams *params)
@@ -72,7 +72,6 @@ AgreeBP::lookup(ThreadID tid, Addr branch_addr, void * &bp_history)
 
     /* Create history and update */
     BPHistory *history = new BPHistory;
-    history->branch_addr = branch_addr;
     history->globalHistory = globalHistory;
     history->BBSpred = BBSpred;
     history->PHTcounter = PatternHistoryTable[PHTAddr];
@@ -94,7 +93,6 @@ void
 AgreeBP::uncondBranch(ThreadID tid, Addr pc, void * &bp_history)
 {   
     BPHistory *history = new BPHistory;
-    history->branch_addr = pc;
     history->globalHistory = globalHistory;
     history->BBSpred = 1;
     /* Make the PHT counter agree, but at the verge */
