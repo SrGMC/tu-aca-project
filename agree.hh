@@ -44,6 +44,7 @@ class AgreeBP : public BPredUnit
      * @param bp_history Pointer that will be set to the BPHistory object.
      */
     void uncondBranch(ThreadID tid, Addr pc, void * &bp_history);
+
     /**
      * Updates the branch predictor to Not Taken if a BTB entry is
      * invalid or not found.
@@ -52,6 +53,7 @@ class AgreeBP : public BPredUnit
      * @return Whether or not the branch is taken.
      */
     void btbUpdate(ThreadID tid, Addr branch_addr, void * &bp_history);
+
     /**
      * Updates the branch predictor with the actual result of a branch.
      * @param branch_addr The address of the branch to update.
@@ -78,12 +80,14 @@ class AgreeBP : public BPredUnit
   private:
 
     struct BPHistory {
+        /* Branch address */
+        Addr branch_addr;
         /* Global History Register */
-        std::vector<unsigned> globalHistory;
+        unsigned globalHistory;
         /*Prediction of BBS*/
         bool BBSpred;
-        /* Prediction of PHT */
-        bool PHTpred;
+        /* Saturating counter of PHT */
+        unsigned short PHTcounter;
         /* Final prediction */
         bool prediction;
     };
@@ -94,10 +98,13 @@ class AgreeBP : public BPredUnit
 
     /** Global history register. Contains as much history as specified by
      *  globalHistoryBits. */
-    std::vector<unsigned> globalHistory;
+    unsigned globalHistory;
 
     /** Number of bits for the global history. */
     unsigned globalHistorySize;
+
+    /** Global history mask. Based on globalHistorySize */
+    unsigned globalHistoryMask;
 
     /*
      * Pattern History Table.
