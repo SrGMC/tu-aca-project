@@ -758,9 +758,9 @@ class AgreeBP(BranchPredictor):
     cxx_header = "cpu/pred/agree_bp.hh"
 
     globalHistorySize = Param.Unsigned(12, "Number of bits of the global history register")
-    PHTSize = Param.Unsigned(4096, "Size of the pattern history table")
+    PHTSize = Param.Unsigned(8192, "Size of the pattern history table")
     satCounterBits = Param.Unsigned(2, "Number of bits in the saturating counters")
-    BBSSize = Param.Unsigned(4096, "Size of the biasing bit storage")
+    BBSSize = Param.Unsigned(8192, "Size of the biasing bit storage")
 
 class PerceptronBP(BranchPredictor):
     type = 'PerceptronBP'
@@ -768,5 +768,5 @@ class PerceptronBP(BranchPredictor):
     cxx_header = "cpu/pred/perceptron_bp.hh"
 
     globalHistorySize = Param.Unsigned(12, "Number of bits of the global history register")
-    PTSize = Param.Unsigned(4096, "Size of the perceptron table")
+    PTSize = Param.Unsigned(8192, "Size of the perceptron table")
     biasBits = Param.Unsigned(1, "Number of biased bits in the perceptron nodes")
