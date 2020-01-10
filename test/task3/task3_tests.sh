@@ -7,12 +7,12 @@ mkdir results/LTAGE
 mkdir results/PerceptronBP
 mkdir results/TournamentBP
 
-./tu-aca-project/agree.sh &
-./tu-aca-project/bimode.sh &
-./tu-aca-project/local.sh &
+./tu-aca-project/test/task3/agree.sh &
+./tu-aca-project/test/task3/bimode.sh &
+./tu-aca-project/test/task3/local.sh &
 wait
 
-./tu-aca-project/ltage.sh &
-./tu-aca-project/perceptron.sh &
-./tu-aca-project/tournament.sh &
+./tu-aca-project/test/task3/ltage.sh &
+./tu-aca-project/test/task3/perceptron.sh &
+./tu-aca-project/test/task3/tournament.sh &
 wait
