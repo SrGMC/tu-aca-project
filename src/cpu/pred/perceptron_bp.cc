@@ -43,25 +43,27 @@ PerceptronBP::PerceptronBP(const PerceptronBPParams *params)
 bool
 PerceptronBP::lookup(ThreadID tid, Addr branch_addr, void * &bp_history)
 {   
-    // Step 1
-    // Get PT table adress based on branch_addr
-    // Select perceptron based on previous address
+    /* Use the branch address as an index value, to
+     * to get the corresponding perceptron
+     */
     unsigned PTAddr = branch_addr & (PTSize - 1);
     Perceptron *perceptron = &perceptronTable[PTAddr];
 
-    // Step 2
-    // Get globalHistoryRegister with biasBits
+    /* Generate a globalHistory with the first k
+     * bits set to one as a bias
+     */
     unsigned globalHistoryBias = globalHistory;
     for (int i = globalHistorySize - 1; i >= globalHistorySize - biasBits; i--){
         unsigned mask = pow(2, i);
         globalHistoryBias |= mask;
     }
 
+    /* Feed the perceptron with the biased global history register
+     * and get the prediction. Then convert it into a boolean
+     */
     int y = perceptron->getPrediction(globalHistoryBias);
     int prediction = (y > 0) ? 1 : 0;
 
-    // Step 3
-    // Create history and update
     /* Create history and update */
     BPHistory *history = new BPHistory;
     history->globalHistory = globalHistory;
@@ -81,17 +83,27 @@ PerceptronBP::lookup(ThreadID tid, Addr branch_addr, void * &bp_history)
 void
 PerceptronBP::uncondBranch(ThreadID tid, Addr pc, void * &bp_history)
 {   
+    /* Use the branch address as an index value, to
+     * to get the corresponding perceptron
+     */
     unsigned PTAddr = pc & (PTSize - 1);
     Perceptron *perceptron = &perceptronTable[PTAddr];
 
+    /* Generate a globalHistory with the first k
+     * bits set to one as a bias
+     */
     unsigned globalHistoryBias = globalHistory;
     for (int i = globalHistorySize - 1; i >= globalHistorySize - biasBits; i--){
         unsigned mask = pow(2, i);
         globalHistoryBias |= mask;
     }
 
+    /* Get the predicted value by the perceptron */
     int y = perceptron->getPrediction(globalHistoryBias);
 
+    /* Create an history object with the current globalHistory, the perceptron
+     * prediction and the prediction set as 1. Also update the BHR
+     */
     BPHistory *history = new BPHistory;
     history->globalHistory = globalHistory;
     history->y = y;
@@ -118,27 +130,26 @@ PerceptronBP::update(ThreadID tid, Addr branch_addr, bool taken,
     assert(bp_history);
     BPHistory *history = static_cast<BPHistory *>(bp_history);
 
-    // Step 1
-    // Get PT table adress based on branch_addr
-    // Select perceptron based on previous address
+    /* Use the branch address as an index value, to
+     * to get the corresponding perceptron
+     */
     unsigned PTAddr = branch_addr & (PTSize - 1);
     Perceptron *perceptron = &perceptronTable[PTAddr];
 
-    // Step 2
-    // Get globalHistoryRegister with biasBits
+    /* Generate a globalHistory with the first k
+     * bits set to one as a bias
+     */
     unsigned globalHistoryBias = history->globalHistory;
     for (int i = globalHistorySize - 1; i >= globalHistorySize - biasBits; i--){
         unsigned mask = pow(2, i);
         globalHistoryBias |= mask;
     }
 
-    // Feed the selected perceptron with the globalHistoryRegister
-    // Train the perceptron with the obtained values
+    /* Feed the perceptron with the biased global history register, the y result in histoy
+     * the outcome of the branch and the threshold in order to train the preceptron.
+     */
     perceptron->train(history->y, taken, globalHistoryBias, threshold);
 
-
-    // Step 3
-    // Update global history
     /* If it was squashed, restore the speculatively updated BHR */
     if (squashed) {
         globalHistory = history->globalHistory;
