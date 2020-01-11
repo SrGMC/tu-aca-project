@@ -1,3 +1,4 @@
+#!/bin/bash
 function help(){
     echo "$0 [branch predictor] <script name>"
     exit
