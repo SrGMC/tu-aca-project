@@ -18,10 +18,6 @@ mkdir results/LocalBP/results/dedup
 timeout -s SIGINT 1800 ./tu-aca-project/test/task3/run.sh LocalBP scripts/dedup/dedup_1c_simsmall > results/LocalBP/logs/dedup.txt 2>&1
 mv m5out/stats.txt results/LocalBP/results/dedup/
 
-mkdir results/LocalBP/results/facesim
-timeout -s SIGINT 1800 ./tu-aca-project/test/task3/run.sh LocalBP scripts/facesim/facesim_1c_simsmall > results/LocalBP/logs/facesim.txt 2>&1
-mv m5out/stats.txt results/LocalBP/results/facesim/
-
 mkdir results/LocalBP/results/ferret
 timeout -s SIGINT 1800 ./tu-aca-project/test/task3/run.sh LocalBP scripts/ferret/ferret_1c_simsmall > results/LocalBP/logs/ferret.txt 2>&1
 mv m5out/stats.txt results/LocalBP/results/ferret/
@@ -34,18 +30,6 @@ mkdir results/LocalBP/results/freqmine
 timeout -s SIGINT 1800 ./tu-aca-project/test/task3/run.sh LocalBP scripts/freqmine/freqmine_1c_simsmall > results/LocalBP/logs/freqmine.txt 2>&1
 mv m5out/stats.txt results/LocalBP/results/freqmine/
 
-mkdir results/LocalBP/results/swaptions
-timeout -s SIGINT 1800 ./tu-aca-project/test/task3/run.sh LocalBP scripts/swaptions/swaptions_1c_simsmall > results/LocalBP/logs/swaptions.txt 2>&1
-mv m5out/stats.txt results/LocalBP/results/swaptions/
-
-mkdir results/LocalBP/results/vips
-timeout -s SIGINT 1800 ./tu-aca-project/test/task3/run.sh LocalBP scripts/vips/vips_1c_simsmall > results/LocalBP/logs/vips.txt 2>&1
-mv m5out/stats.txt results/LocalBP/results/vips/
-
 mkdir results/LocalBP/results/x264
 timeout -s SIGINT 1800 ./tu-aca-project/test/task3/run.sh LocalBP scripts/x264/x264_1c_simsmall > results/LocalBP/logs/x264.txt 2>&1
 mv m5out/stats.txt results/LocalBP/results/x264/
-
-mkdir results/LocalBP/results/rtview
-timeout -s SIGINT 1800 ./tu-aca-project/test/task3/run.sh LocalBP scripts/rtview/rtview_1c_simsmall > results/LocalBP/logs/rtview.txt 2>&1
-mv m5out/stats.txt results/LocalBP/results/rtview/
