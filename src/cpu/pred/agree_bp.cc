@@ -35,11 +35,16 @@ AgreeBP::AgreeBP(const AgreeBPParams *params)
     }
 
     BiasingBitStorage.resize(BBSSize);
+    BBStag.resize(BBSSize);
 
     /* As most branches are usually taken, initialize them to not-taken (0)
      * so prediction is taken (1)*/
     for (int i = 0; i < BBSSize; ++i) {
         BiasingBitStorage[i] = 0;
+    }
+
+    for (int i = 0; i < BBSSize; ++i) {
+        BBStag[i] = 0;
     }
 
     /* Setup globalHistoryMask */
@@ -140,10 +145,14 @@ AgreeBP::update(ThreadID tid, Addr branch_addr, bool taken,
     }
 
     /* Get the Biasing Bit Storage address from branch_addr and
-     * update its value.
+     * update its value only if it is the first time it appears.
      */
     unsigned BBSAddr = branch_addr & (BBSSize - 1);
-    BiasingBitStorage[BBSAddr] = taken;
+    unsigned BBSVTag = branch_addr & ~(BBSSize - 1);
+    if (BBStag[BBSAddr] != BBSVTag) {
+        BiasingBitStorage[BBSAddr] = taken;
+        BBStag[BBSAddr] = BBSVTag;
+    }
 
     /* Update BHR */
     globalHistory = (globalHistory << 1) | taken;

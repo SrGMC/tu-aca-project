@@ -123,6 +123,7 @@ class AgreeBP : public BPredUnit
 
     /** Biasing bit storage with booleans */
     std::vector<bool> BiasingBitStorage;
+    std::vector<unsigned> BBStag;
 
     /** Size of the BBS vector */
     unsigned BBSSize;
