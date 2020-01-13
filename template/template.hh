@@ -77,14 +77,20 @@ class TemplateBP : public BPredUnit
      */
     void squash(ThreadID tid, void *bp_history);
 
-// Uncomment this line when in use
-//  private:
+
+  private:
 
     /*
      * Implement private functions, variables and structures
      * such as a global history register (as vector), biasing bit tables,
      * perceptron tables, sizes, masks, etc...
      */ 
+
+    struct BPHistory {
+        /* Prediction */
+        bool prediction;
+        /* Add more elements here */
+    }
 
 };
 
