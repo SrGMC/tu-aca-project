@@ -759,7 +759,7 @@ class AgreeBP(BranchPredictor):
 
     globalHistorySize = Param.Unsigned(12, "Number of bits of the global history register")
     PHTSize = Param.Unsigned(8192, "Size of the pattern history table")
-    satCounterBits = Param.Unsigned(2, "Number of bits in the saturating counters")
+    satCounterBits = Param.Unsigned(3, "Number of bits in the saturating counters")
     BBSSize = Param.Unsigned(8192, "Size of the biasing bit storage")
 
 class PerceptronBP(BranchPredictor):

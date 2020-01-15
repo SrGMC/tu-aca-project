@@ -79,7 +79,7 @@ Moreover, three variables, the size of the PT, the BHR length, and the number of
 
 ## Comparison
 
-First, we must describe the predictors we are going to use for comparison and we must take into account their descriptions when analyzing the results. The predictors used are the following:
+First, we must describe the predictors we are going to use for comparison and we must take into account their descriptions when analyzing the results. The predictors used are the following, sorted by their year of appearance:
 
 1. **Local**: The Local branch predictor was introduced in 1991 by T. Y. Yeh and  Y. N. Patt. in which the history of a recent branch is used to address a pattern table with saturating counters that predict a branch outcome.
 2. **Agree**: This branch predictor was introduced in June 1997 by E. Sprangle, R. S. Chappell, M. Alsup, and Y. N. Patt and is designed to improve a common issue in local branch predictors, where negative interference by different branches occur.
@@ -90,20 +90,26 @@ First, we must describe the predictors we are going to use for comparison and we
 
 Even though _gem5_ has a lot of branch predictors implemented, we choose these predictors are they were the most significant. Every branch predictor was tested in their default configurations and use a similar amount of hardware resources.
 
-_TODO: Check hardware resources_
+From this, we propose the following hypothesis: the most recent predictors will obtain better accuracy than the older ones.
 
 ![Comparison between branch predictors with averages](images/comparison.png)
 
-In  **¡¡¡FIGURE 3!!!**, we can see that in most cases, newer predictors outperform the old ones. Regarding our implementations, we can see that the _Agree predictor_ improves the local predictor, since, as we have commented before, the _Agree predictor_ tries to avoid negative interferences.
+In **Figure 3!!!**, we can see that in some of the cases, the new predictors outperform the old ones, as our hypothesis stated, but we cannot confirm it one hundred percent, as on average, the BiMode predictor outperforms the Tournament and Perceptron predictor.
 
-_TODO: Improve discussion of ALL predictors_
+However, we observe that the Perceptron and Tournament predictors have approximately the same accuracy and are near the BiMode and LTAGE predictors, but, our implementation of the Perceptron predictor sometimes falls behind in a couple of benchmarks. Besides, we have observed that being a more complex predictor, the time to perform the lookups and training is longer than others.
 
-However, we can also observe that our implementation of the _Perceptron predictor_ falls behind in some benchmarks. Besides, we have observed that being a more complex predictor, the time to perform the lookups and training is longer than others. From this we could deduce that our implementation could require some optimization improvements, or simply put, it is better to use newly developed predictors which less complexity.
+Regarding our other implementation, we can see that the Agree predictor improves the local predictor, since, as we have commented before, the Agree predictor tries to avoid negative interferences. However, the improvements don't have a substantial difference.
 
-Finally, it should be noted that the average accuracy of all predictors is not similar to those shown in their respective papers. This may be due to many reasons, but perhaps the main one is that this researches used different benchmark suites than those used here and that not all programs can provide a certain performance and variations can be very large, however, these tests serve as relatively useful approximations.
+Another observation we made is that when the branch predictors are more complex, the time they take to make a prediction increases, as more cycles are required to perform lookups and/or training.
+
+It should also be noted that the average accuracy of all predictors is not similar to those shown in their respective papers. This may be due to many reasons, but perhaps the main one is that this researches used different benchmark suites than those used here and that not all programs can provide a certain performance and variations can be very large, however, these tests serve as relatively useful approximations.
 
 _TODO: Compare with best results of previous analysis_
 
 \clearpage
 
 # Conclusion
+
+We can reach some conclusions by taking a look at this analysis. We can say that in general, our implementations require some improvements and optimizations that may not have been conceived during the development of this project, especially in the Perceptron predictor since is a more complex one.
+
+Going into detail, several improvements can be thought of. In the case of the Agree predictor, it has been observed that when the direction of the branch has (a little) more influence when generating the index for the pattern table, the accuracy slightly increases. Thus, we could implement better functions to generate the index to be used in the pattern table, different from a XOR, such as a hash function, a function that gives more influence to the whole direction of the branch or a dynamic function that is training during the execution of the program, such as a perceptron, although we must take into account when making these improvements the number of resources to be used and if some of them are worth sacrificing.

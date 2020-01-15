@@ -1,0 +1,115 @@
+scons: Reading SConscript files ...
+Warning: Warning: Your compiler doesn't support incremental linking and lto at the same time, so lto is being disabled. To force lto on anyway, use the --force-lto option. That will disable partial linking.
+Info: Using Python config: /usr/bin/python2.7-config
+Checking for C header file Python.h... (cached) yes
+Checking for C library python2.7... (cached) yes
+Checking for C library pthread... (cached) yes
+Checking for C library dl... (cached) yes
+Checking for C library util... (cached) yes
+Checking for C library m... (cached) yes
+Checking for accept(0,0,0) in C++ library None... (cached) yes
+Checking for zlibVersion() in C++ library z... (cached) yes
+Checking for GOOGLE_PROTOBUF_VERIFY_VERSION in C++ library protobuf... (cached) yes
+Checking for C header file valgrind/valgrind.h... (cached) no
+Checking for clock_nanosleep(0,0,NULL,NULL) in C library None... (cached) yes
+Checking for timer_create(CLOCK_MONOTONIC, NULL, NULL) in C library None... (cached) no
+Checking for timer_create(CLOCK_MONOTONIC, NULL, NULL) in C library rt... (cached) yes
+Checking for C library tcmalloc... (cached) yes
+Checking for char temp; backtrace_symbols_fd((void*)&temp, 0, 0) in C library None... (cached) yes
+Checking for C header file fenv.h... (cached) yes
+Checking for C header file png.h... (cached) no
+Warning: Header file <png.h> not found.
+         This host has no libpng library.
+         Disabling support for PNG framebuffers.
+Checking for C header file linux/kvm.h... (cached) yes
+Checking for C header file linux/if_tun.h... (cached) yes
+Checking size of struct kvm_xsave ... (cached) yes
+Checking for member exclude_host in struct perf_event_attr...(cached) yes
+Checking for hdf5-serial using pkg-config... pkg-config not found
+Checking for hdf5 using pkg-config... pkg-config not found
+Checking for H5Fcreate("", 0, 0, 0) in C library hdf5... (cached) no
+Warning: Couldn't find any HDF5 C++ libraries. Disabling
+         HDF5 support.
+Checking whether __i386__ is declared... (cached) no
+Checking whether __x86_64__ is declared... (cached) yes
+Building in /home/alvaro/gem5/build/ALPHA
+Using saved variables file /home/alvaro/gem5/build/variables/ALPHA
+scons: done reading SConscript files.
+scons: Building targets ...
+ [VER TAGS]  -> ALPHA/sim/tags.cc
+ [SO PARAM] BranchPredictor -> ALPHA/params/BranchPredictor.hh
+ [SO PARAM] IndirectPredictor -> ALPHA/params/IndirectPredictor.hh
+ [SO PARAM] LocalBP -> ALPHA/params/LocalBP.hh
+ [SO PARAM] SimpleIndirectPredictor -> ALPHA/params/SimpleIndirectPredictor.hh
+ [SO PARAM] TournamentBP -> ALPHA/params/TournamentBP.hh
+ [SO PARAM] BiModeBP -> ALPHA/params/BiModeBP.hh
+ [SO PARAM] TAGEBase -> ALPHA/params/TAGEBase.hh
+ [SO PARAM] TAGE -> ALPHA/params/TAGE.hh
+ [SO PARAM] LoopPredictor -> ALPHA/params/LoopPredictor.hh
+ [SO PARAM] LTAGE -> ALPHA/params/LTAGE.hh
+ [SO PARAM] MultiperspectivePerceptron -> ALPHA/params/MultiperspectivePerceptron.hh
+ [SO PARAM] MultiperspectivePerceptron8KB -> ALPHA/params/MultiperspectivePerceptron8KB.hh
+ [SO PARAM] MultiperspectivePerceptron64KB -> ALPHA/params/MultiperspectivePerceptron64KB.hh
+ [SO PARAM] MPP_LoopPredictor -> ALPHA/params/MPP_LoopPredictor.hh
+ [SO PARAM] MPP_StatisticalCorrector -> ALPHA/params/MPP_StatisticalCorrector.hh
+ [SO PARAM] MPP_TAGE -> ALPHA/params/MPP_TAGE.hh
+ [SO PARAM] MultiperspectivePerceptronTAGE -> ALPHA/params/MultiperspectivePerceptronTAGE.hh
+ [SO PARAM] MPP_LoopPredictor_8KB -> ALPHA/params/MPP_LoopPredictor_8KB.hh
+ [SO PARAM] StatisticalCorrector -> ALPHA/params/StatisticalCorrector.hh
+ [SO PARAM] MPP_StatisticalCorrector_8KB -> ALPHA/params/MPP_StatisticalCorrector_8KB.hh
+ [SO PARAM] MPP_TAGE_8KB -> ALPHA/params/MPP_TAGE_8KB.hh
+ [SO PARAM] MultiperspectivePerceptronTAGE8KB -> ALPHA/params/MultiperspectivePerceptronTAGE8KB.hh
+ [SO PARAM] MPP_StatisticalCorrector_64KB -> ALPHA/params/MPP_StatisticalCorrector_64KB.hh
+ [SO PARAM] MultiperspectivePerceptronTAGE64KB -> ALPHA/params/MultiperspectivePerceptronTAGE64KB.hh
+ [SO PARAM] TAGE_SC_L -> ALPHA/params/TAGE_SC_L.hh
+ [SO PARAM] TAGE_SC_L_LoopPredictor -> ALPHA/params/TAGE_SC_L_LoopPredictor.hh
+ [SO PARAM] TAGE_SC_L_TAGE -> ALPHA/params/TAGE_SC_L_TAGE.hh
+ [SO PARAM] TAGE_SC_L_8KB -> ALPHA/params/TAGE_SC_L_8KB.hh
+ [SO PARAM] TAGE_SC_L_8KB_StatisticalCorrector -> ALPHA/params/TAGE_SC_L_8KB_StatisticalCorrector.hh
+ [SO PARAM] TAGE_SC_L_TAGE_8KB -> ALPHA/params/TAGE_SC_L_TAGE_8KB.hh
+ [SO PARAM] TAGE_SC_L_64KB -> ALPHA/params/TAGE_SC_L_64KB.hh
+ [SO PARAM] TAGE_SC_L_64KB_StatisticalCorrector -> ALPHA/params/TAGE_SC_L_64KB_StatisticalCorrector.hh
+ [SO PARAM] TAGE_SC_L_TAGE_64KB -> ALPHA/params/TAGE_SC_L_TAGE_64KB.hh
+ [SO PARAM] AgreeBP -> ALPHA/params/AgreeBP.hh
+ [SO PARAM] PerceptronBP -> ALPHA/params/PerceptronBP.hh
+ [SO PyBind] AgreeBP -> ALPHA/python/_m5/param_AgreeBP.cc
+ [SO PyBind] BiModeBP -> ALPHA/python/_m5/param_BiModeBP.cc
+ [SO PyBind] BranchPredictor -> ALPHA/python/_m5/param_BranchPredictor.cc
+ [SO PyBind] IndirectPredictor -> ALPHA/python/_m5/param_IndirectPredictor.cc
+ [SO PyBind] LTAGE -> ALPHA/python/_m5/param_LTAGE.cc
+ [SO PyBind] LocalBP -> ALPHA/python/_m5/param_LocalBP.cc
+ [SO PyBind] LoopPredictor -> ALPHA/python/_m5/param_LoopPredictor.cc
+ [SO PyBind] MPP_LoopPredictor -> ALPHA/python/_m5/param_MPP_LoopPredictor.cc
+ [SO PyBind] MPP_LoopPredictor_8KB -> ALPHA/python/_m5/param_MPP_LoopPredictor_8KB.cc
+ [SO PyBind] MPP_StatisticalCorrector -> ALPHA/python/_m5/param_MPP_StatisticalCorrector.cc
+ [SO PyBind] MPP_StatisticalCorrector_64KB -> ALPHA/python/_m5/param_MPP_StatisticalCorrector_64KB.cc
+ [SO PyBind] MPP_StatisticalCorrector_8KB -> ALPHA/python/_m5/param_MPP_StatisticalCorrector_8KB.cc
+ [SO PyBind] MPP_TAGE -> ALPHA/python/_m5/param_MPP_TAGE.cc
+ [SO PyBind] MPP_TAGE_8KB -> ALPHA/python/_m5/param_MPP_TAGE_8KB.cc
+ [SO PyBind] MultiperspectivePerceptron -> ALPHA/python/_m5/param_MultiperspectivePerceptron.cc
+ [SO PyBind] MultiperspectivePerceptron64KB -> ALPHA/python/_m5/param_MultiperspectivePerceptron64KB.cc
+ [SO PyBind] MultiperspectivePerceptron8KB -> ALPHA/python/_m5/param_MultiperspectivePerceptron8KB.cc
+ [SO PyBind] MultiperspectivePerceptronTAGE -> ALPHA/python/_m5/param_MultiperspectivePerceptronTAGE.cc
+ [SO PyBind] MultiperspectivePerceptronTAGE64KB -> ALPHA/python/_m5/param_MultiperspectivePerceptronTAGE64KB.cc
+ [SO PyBind] MultiperspectivePerceptronTAGE8KB -> ALPHA/python/_m5/param_MultiperspectivePerceptronTAGE8KB.cc
+ [SO PyBind] PerceptronBP -> ALPHA/python/_m5/param_PerceptronBP.cc
+ [SO PyBind] SimpleIndirectPredictor -> ALPHA/python/_m5/param_SimpleIndirectPredictor.cc
+ [SO PyBind] StatisticalCorrector -> ALPHA/python/_m5/param_StatisticalCorrector.cc
+ [SO PyBind] TAGE -> ALPHA/python/_m5/param_TAGE.cc
+ [SO PyBind] TAGEBase -> ALPHA/python/_m5/param_TAGEBase.cc
+ [SO PyBind] TAGE_SC_L -> ALPHA/python/_m5/param_TAGE_SC_L.cc
+ [SO PyBind] TAGE_SC_L_64KB -> ALPHA/python/_m5/param_TAGE_SC_L_64KB.cc
+ [SO PyBind] TAGE_SC_L_64KB_StatisticalCorrector -> ALPHA/python/_m5/param_TAGE_SC_L_64KB_StatisticalCorrector.cc
+ [SO PyBind] TAGE_SC_L_8KB -> ALPHA/python/_m5/param_TAGE_SC_L_8KB.cc
+ [SO PyBind] TAGE_SC_L_8KB_StatisticalCorrector -> ALPHA/python/_m5/param_TAGE_SC_L_8KB_StatisticalCorrector.cc
+ [SO PyBind] TAGE_SC_L_LoopPredictor -> ALPHA/python/_m5/param_TAGE_SC_L_LoopPredictor.cc
+ [SO PyBind] TAGE_SC_L_TAGE -> ALPHA/python/_m5/param_TAGE_SC_L_TAGE.cc
+ [SO PyBind] TAGE_SC_L_TAGE_64KB -> ALPHA/python/_m5/param_TAGE_SC_L_TAGE_64KB.cc
+ [SO PyBind] TAGE_SC_L_TAGE_8KB -> ALPHA/python/_m5/param_TAGE_SC_L_TAGE_8KB.cc
+ [SO PyBind] TournamentBP -> ALPHA/python/_m5/param_TournamentBP.cc
+ [EMBED PY] ALPHA/marshal, cpu/pred/BranchPredictor.py -> cpu/pred/BranchPredictor.py.cc
+ [     CXX] ALPHA/cpu/pred/BranchPredictor.py.cc -> .o
+ [    LINK]  -> ALPHA/python/lib.o.partial
+ [     CXX] ALPHA/base/date.cc -> .o
+ [    LINK]  -> ALPHA/gem5.opt
+scons: done building targets.
