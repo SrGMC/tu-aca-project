@@ -21,7 +21,7 @@ header-includes:
 
 # Introduction
 
-The objective of this project is to implement two branch predictors, the Agree predictor, and the Perceptron predictor and evaluate their performance in addition to comparing them with other predictors already developed. The predictors were simulated and tested in the gem5 simulator running on an Intel 4 core i5 at 1.40GHz.
+The objective of this project is to implement two branch predictors, the Agree predictor, and the Perceptron predictor and evaluate their performance besides comparing them with other predictors already developed. The predictors were simulated and tested in the gem5 simulator running on an Intel 4 core i5 at 1.40GHz.
 
 # Implementation details
 
@@ -35,7 +35,7 @@ As most branches are usually taken, we initialize the predictor with the biasing
 
 In our implementation, we speculatively fill a branch history register (BHR) which is used, along the LSBs in the branch address, to index the pattern history table (PHT). The LSBs in the branch address are also used to index the biasing bit storage (BBS). Then, the two results are checked (or XNORed) to see if the PHT agrees with the biasing bit and a prediction will be made. This behavior can be found in the function `lookup(...)`.
 
-On the other hand, the PHT entry is increased if the biasing bit and the outcome were the same (i.e. the bias bit was in the right direction) and decremented otherwise. The branch history register is also restored in case a squash occurred and then updated with the outcome. Finally, the biasing bit entry is also updated to the outcome of the branch, but only the first time the branch is encountered, i.e. if the tags match. This also allows for new branches to overwrite the BBS entry for branches that no longer are in execution. This behavior can be found in the function `update(...)`.
+The PHT entry is increased if the biasing bit and the outcome were the same (i.e. the bias bit was in the right direction) and decremented otherwise. The branch history register is also restored in case a squash occurred and then updated with the outcome. Finally, the biasing bit entry is also updated to the outcome of the branch, but only the first time the branch is encountered, i.e. if the tags match. This also allows for new branches to overwrite the BBS entry for branches that no longer are in execution. This behavior can be found in the function `update(...)`.
 
 Moreover, four variables, the size of the PHT and the BBS, the BHR length, and the saturating counter bits are implemented and to prevent an _index out of range_ error, a bitmask is used, based on the branch history register length.
 
@@ -63,7 +63,7 @@ Moreover, three variables, the size of the PT, the BHR length, and the number of
 
 The PARSEC benchmark suite, as specified in the project presentation was used. The following benchmarks, which all fall in different categories were used: blackscholes, bodytrack, canneal, dedup, ferret, fluidanimate, freqmine, x264.
 
-Due to limited time and some benchmarks taking too much time to finish, each one was executed with small input sets and limited to 60 minutes of runtime, after which all the statistic files were collected and ROI statistics were analyzed and plotted.
+Because of limited time and some benchmarks taking too much time to finish, each one was executed with small input sets and limited to 60 minutes of runtime, after which all the statistic files were collected and ROI statistics were analyzed and plotted.
 
 ## Agree predictor
 
@@ -87,13 +87,13 @@ $$tableSize = 2 ^ {bhrSize + 2}$$
 
 ![Agree predictor accuracy](images/accuracy_agree.png)
 
-In Figure 3 we can see that, as stated, increasing the size of the tables produces an improvement in the accuracy of the predictor. This is because the small size tables still have interference although it affects less and, although the objective of the Agree predictor is to reduce negative interference, it is not feasible to have tables for all possible instructions. 
+In Figure 3 we can see that, as stated, increasing the size of the tables produces an improvement in the predictor's accuracy. This is because the small size tables still have interference although it affects less and, although the Agree predictor aims to reduce negative interference, it is not feasible to have tables for all possible instructions. 
 
 Likewise, as expected, increasing the size of the tables provides more information to the predictor when making a prediction, as well as a better correlation between branches with similar behavior which map to the same PHT entry, consequently increasing the accuracy.
 
-On the other hand, again in Figure 3, we can see the results of test 2. We can quickly observe that, in some cases, when the direction of the branch has more "influence", the accuracy improves, however, we find cases where the accuracy has an equal or very similar value and that the results, unlike the first test, do not follow a linear trend.
+Again in Figure 3, we can see the results of test 2. We can quickly observe that, in some cases, when the direction of the branch has more "influence", the accuracy improves, however, we find cases where the accuracy has an equal or very similar value and that the results, unlike the first test, do not follow a linear trend.
 
-This may be because in some cases the branch correlation is influenced by both registers equally while in others, this correlation is due in a small major part to the branch direction itself. Concluding, it cannot be confirmed that the smaller the branch history register size, the more dependent the prediction is on the branch direction.
+This may be because sometimes the branch correlation is influenced by both registers equally while in others, this correlation is due in a small major part to the branch direction itself. In conclusion, it cannot be confirmed that the smaller the branch history register size, the more dependent the prediction is in the branch direction.
 
 ### Saturating Counter
 
@@ -120,11 +120,11 @@ The first test was done similarly to the one performed in the Agree predictor. I
 
 $$tableSize = 2 ^ {bhrSize}$$
 
-![Perceptron predictor accuracy](images/perceptron_accuracy.png)
+![Perceptron predictor accuracy](images/accuracy_perceptron.png)
 
-In Figure 5 we can see that the accuracy follows a logarithmic trend, which seems to converge to an asymptote around 93% accuracy. We will later analyze this result in comparison with other predictors and present possible solutions and improvements.
+In Figure 5 we can see that the accuracy follows a logarithmic trend which seems to converge to an asymptote around 93% accuracy. We will later analyze this result in comparison with other predictors and present possible solutions and improvements.
 
-Again, similar to the previous predictor, if the number of entries and the length of the history register increases, the accuracy increases, as would be expected and confirming our hypothesis. This increase in accuracy is because the perceptrons can analyze the behavior of the branches through their training since the bits that have a higher correlation with the branch result will have higher values than the bits with lower correlation. When more bits are available, more correlations can be found. Also, when more perceptrons are in use, less interference occurs, also increasing the accuracy.
+Again, similar to the previous predictor, if the number of entries and the length of the history register increases, the accuracy increases, as it would be expected and confirming our hypothesis. This increase in accuracy is because the perceptrons can analyze the behavior of the branches through their training since the bits that have a higher correlation with the branch result will have higher values than the bits with lower correlation. When more bits are available, more correlations can be found. Also, when more perceptrons are in use, less interference occurs, also increasing the accuracy.
 
 On the other hand, this asymptote can be attributed to the training of the perceptrons. These types of perceptrons have a big-O of $O(n)$, so the larger the perceptron inputs, the longer the training time, thus affecting the predictions that can be made in a given period of time.
 
@@ -132,7 +132,7 @@ Therefore, the greater the number of entries and the longer the branch history r
 
 ### Biasing Bits
 
-The use of the first $k$ bits as a bias is a feature that we have decided to include. Unlike the paper, where only the first bit is used as bias, we have decided to implement the possibility of increasing or decreasing this amount, to also check if it affects the results in any way.
+The use of the first $k$ bits as a bias is a feature that we have included. Unlike the paper, where only the first bit is used as bias, we have decided to implement the possibility of increasing or decreasing this amount, to also check if it affects the results in any way.
 
 For this test, we have taken the best configuration in terms of table size and register size from the last tests, i.e. a table size of $32768$ entries and a history register size of $15$ bits.
 
@@ -150,22 +150,22 @@ In conclusion, increasing the number of biasing bits leads to similar or slightl
 
 ## Comparison
 
-First, we must describe the predictors we are going to use for comparison and we must take into account their descriptions when analyzing the results. The predictors used are the following, sorted by their year of appearance:
+First, we must describe the predictors we will use for comparison and we must take into account their descriptions when analyzing the results. The predictors used are the following, sorted by their year of appearance:
 
-1. **Local**: The Local branch predictor was introduced in 1991 by T. Y. Yeh and  Y. N. Patt. in which the history of a recent branch is used to address a pattern table with saturating counters that predict a branch outcome.
+1. **Local**: The Local branch predictor was introduced in 1991 by T. Y. Yeh and Y. N. Patt. in which the history of a recent branch is used to address a pattern table with saturating counters that predict a branch outcome.
 2. **Agree**: This branch predictor was introduced in June 1997 by E. Sprangle, R. S. Chappell, M. Alsup, and Y. N. Patt and is designed to improve a common issue in local branch predictors, where negative interference by different branches occur.
-3. **BiMode**: BiMode was introduced in December 1997 by C. C. Lee, C. K. Chen and  T. N. Mudge. This predictor divides the prediction tables into two halves, dynamically determines the current "mode" of the program and selects the appropriate half of the table for prediction while preserving global history-based prediction and reducing destructive aliasing.
+3. **BiMode**: BiMode was introduced in December 1997 by C. C. Lee, C. K. Chen and T. N. Mudge. This predictor divides the prediction tables into two halves, dynamically determines the current "mode" of the program and selects the appropriate half of the table for prediction while preserving global history-based prediction and reducing destructive aliasing.
 4. **Tournament**: This predictor is used in the Alpha 21264 processor. Introduced by R. E. Kessler in 1999, this predictor makes use of a hybrid approach, with a local history predictor, a global history predictor and a "chooser" that selects depending on the branch which predictor will give the best prediction.
 5. **Perceptron**: Introduced in 2001 by D. A. Jimenez and C. Lin, this branch predictor makes use of single perceptrons, previously defined as binary classifiers to provide better accuracy with a more sophisticated learning mechanism.
 6. **L-TAGE**: L-TAGE was presented in a paper by A. Seznec in 2006. It relies on several predictor tables indexed through independent functions of the global branch, path history and or the branch address and usually greatly outperforms the rest of the predictors in sheer performance.
 
 Even though _gem5_ has a lot of branch predictors implemented, we choose these predictors are they were the most significant. Every branch predictor was tested in their default configurations and use a similar amount of hardware resources.
 
-From this, we propose the following hypothesis: the most recent predictors will obtain better accuracy than the older ones.
+From this, we propose the following hypothesis: the most recent predictors will get better accuracy than the older ones.
 
 ![Comparison between branch predictors with averages](images/comparison.png)
 
-In **Figure 3!!!**, we can see that in some of the cases, the new predictors outperform the old ones, as our hypothesis stated, but we cannot confirm it one hundred percent, as on average, the BiMode predictor outperforms the Tournament and Perceptron predictor.
+In Figure 7, we can see that in some cases, the new predictors outperform the old ones, as our hypothesis stated, but we cannot confirm it one hundred percent, as on average, the BiMode predictor outperforms the Tournament and Perceptron predictor.
 
 However, we observe that the Perceptron and Tournament predictors have approximately the same accuracy and are near the BiMode and LTAGE predictors, but, our implementation of the Perceptron predictor sometimes falls behind in a couple of benchmarks. Besides, we have observed that being a more complex predictor, the time to perform the lookups and training is longer than others.
 
@@ -173,17 +173,17 @@ Regarding our other implementation, we can see that the Agree predictor improves
 
 Another observation we made is that when the branch predictors are more complex, the time they take to make a prediction increases, as more cycles are required to perform lookups and/or training. Improvements in our implementations will be discussed in the conclusions.
 
-It should also be noted that the average accuracy of all predictors is not similar to those shown in their respective papers. This may be due to many reasons, but perhaps the main one is that this researches used different benchmark suites than those used here and that not all programs can provide a certain performance and variations can be very large, however, these tests serve as relatively useful approximations.
+It should also be noted that the average accuracy of all predictors is not similar to those shown in their respective papers. This may be because of many reasons, but perhaps the main one is that these researchers used different benchmark suites than those used here and that not all programs can provide a certain performance and variations can be very large, however, these tests serve as relatively useful approximations.
 
 \clearpage
 
 # Conclusion
 
-We can reach some conclusions by taking a look at this analysis. We can say that in general, our implementations require some improvements and optimizations that may not have been conceived during the development of this project, especially in the Perceptron predictor since is a more complex one.
+We can reach some conclusions by looking at this analysis. We can say that, in general, our implementations require some improvements and optimizations that may not have been conceived during the development of this project, especially in the Perceptron predictor since it is a more complex one.
 
-Going into detail, several improvements can be thought of. In the case of the Agree predictor, it has been observed that when the direction of the branch has (a little) more influence when generating the index for the pattern table, the accuracy slightly increases. Thus, we could implement better functions to smooth the trend line and to generate the index to be used in the pattern table, different from a XOR, such as a hash function, or even a dynamic function where a parameter is "trained" on every branch predictor update, although we must take into account when making these improvements the number of resources to be used and if some of them are worth sacrificing. Other changes we can make may be in the area of the saturating counter, where a different state machine may be ideal.
+Going into detail, several improvements can be thought of. With the Agree predictor, it has been observed that when the direction of the branch has (a little) more influence when generating the index for the pattern table, the accuracy slightly increases. Thus, we could implement better functions to smooth the trend line and to generate the index to be used in the pattern table, different from an XOR, such as a hash function, or even a dynamic function where a parameter is "trained" on every branch predictor update, although we must take into account when making these improvements the number of resources to be used and if some of them are worth sacrificing. Other changes we can make may be in the area of the saturating counter, where a different state machine may be ideal.
 
-Stepping into the Perceptron, an improvement that we can come up with is a better and optimized training function, but taking into account the resource usage. This training function in conjunction with longer branch history registers should help reducing training times and to increase the possible number of predictions that can be done in a given period of time.
+Stepping into the Perceptron, an improvement that we can come up with is a better and optimized training function, but taking into account the resource usage. This training function in conjunction with longer branch history registers should help reduce training times and to increase the possible number of predictions that can be done in a given period of time.
 
 Along with a better training function, an indexing function that takes the branch address as input to index the table of perceptrons could be used, since a main difference from the original paper is that our implementation simply uses the LSBs of the branch address to index the table and this function could increase the accuracy.
 
