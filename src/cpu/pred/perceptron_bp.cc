@@ -25,7 +25,7 @@ PerceptronBP::PerceptronBP(const PerceptronBPParams *params)
     if (!isPowerOf2(PTSize)) {
         fatal("Invalid perceptron table size!\n");
     }
-    
+
     if (biasBits > globalHistorySize/3) {
         fatal("The number of biasing bits for a globalHistorySize of %i must be between 1 and %i!\n", globalHistorySize, (globalHistorySize/3-1));
     }
